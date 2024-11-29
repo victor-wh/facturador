@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'facturador.apps.users',
 ]
 
 MIDDLEWARE = [
@@ -62,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'facturador.urls'
+ROOT_URLCONF = 'facturador.core.urls'
 
 TEMPLATES = [
     {
@@ -80,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'facturador.wsgi.application'
+WSGI_APPLICATION = 'facturador.core.wsgi.application'
 
 
 # Database
@@ -124,13 +125,32 @@ USE_I18N = True
 
 USE_TZ = True
 
+AUTH_USER_MODEL = 'users.User'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+LOCALE_PATHS = [
+    BASE_DIR / 'locale',
+]
+
+STATICFILES_DIRS = [
+    BASE_DIR / 'facturador/static',
+]
+
+# Keep this at the end of the file.
+# Use this section as the last resort. Try to fix everything 
+# with django-environ package
+try:
+    # Try import settings_server.py for local purpose.
+    from settings_server import *
+except ImportError:
+    # Doesn't matter if settings_server.py not exist.
+    pass
